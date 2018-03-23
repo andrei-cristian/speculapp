@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link href="Client.css" type="text/css" rel="stylesheet">
+    <style>
+	.changeRate{
+    	width:50%;
+    	margin-right: auto;
+    	box-shadow: 1px 1px #000000;
+    }
+    button {
+    	outline: none;
+    	background-color: #ffffff;
+    	box-shadow: 1px 1px #000000;
+    }
+    button:hover{
+    	background-color: #000000;
+    	color: #ffffff;
+    }
+    th.To{
+    	width:40%;
+    }
+    </style>
+</head>
+<body>
+    <h1 class="container">Admin Panel</h1>
+    <ul class="container">
+        <li><a href="#">EXPORT JSON</a> </li>
+        <li><a href="#">EXPORT XML</a></li>
+        <li><a href="#">EDIT RSS</a></li>
+    </ul>
+    <table class="exchangerate">
+        <caption>Change Rate</caption>
+        <tr>
+            <th>Currency</th>
+            <th>Current</th>
+            <th class="To">To</th>
+        </tr>
+        <tr>
+            <td>EUR</td>
+            <td>4.567</td>
+            <td><input type="number" class="changeRate"><button id="change">Ok</button></td>
+        </tr>
+        <tr>
+            <td>USD</td>
+            <td>3.456</td>
+            <td><input type="number" class="changeRate"><button id="change">Ok</button></td>
+        </tr>
+        <tr>
+            <td>GBP</td>
+            <td>5.567</td>
+            <td><input type="number" class="changeRate"><button id="change">Ok</button></td>
+        </tr>
+    </table>
+    <div>
+    <form>
+        Ammount: <br>
+        <input type="number" value="val"><br>
+    </form>
+    <table class="tableconvert">
+        <tr>
+            <td>From: </td>
+            <td><select>
+                <option value="euro">EUR</option>
+                <option value="dolar">USD</option>
+                <option value="lira">GBP</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td>To: </td>
+            <td><select>
+            <option value="euro">EUR</option>
+            <option value="dolar">USD</option>
+            <option value="lira">GBP</option>
+        </select></td>
+        </tr></table>
+    <form><input type="submit" value="Submit"></form>
+    </div>
+    <table class="portofolio">
+        <caption>Portofolio Report</caption>
+        <Tr>
+            <th>Tranzaction</th>
+            <th>Result(in RON)</th>
+        </Tr>
+        <tr>
+            <td>RON/EUR</td>
+            <TD>-1050</TD>
+        </tr>
+        <TR>
+            <TD>EUR/USD</TD>
+            <TD>550</TD>
+        </TR>
+    </table>
+
+
+
+</body>
+</html>
