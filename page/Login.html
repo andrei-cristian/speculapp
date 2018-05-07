@@ -4,9 +4,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Login</title>
-	<link href="Login.css" type="text/css" rel="stylesheet">
+	<link href="../style/Login.css" type="text/css" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="login.js"></script>
+	<script src="../script/login.js"></script>
 </head>
 <body>
 	<div class="form">
@@ -25,7 +25,7 @@
 		<div class="tab-content">
 			<div id="signup" class="tabcontent">
 				<h1>Create account</h1>
-				<form action="Client.html" method="post">
+				<form action="../script/signup.php" method="post">
 
 					<div class="top-row">
 						<div class="field-wrap">
@@ -50,10 +50,10 @@
 			<div id="login" class="tabcontent">
 				<h1>Log in</h1>
 
-				<form action="../scripts/checklogin.php" method="post">
+				<form action="../script/checklogin.php" method="post">
 
 					<div class="field-wrap">
-						<input type="email" required autocomplete="off" placeholder="Email">
+						<input type="text" required autocomplete="off" placeholder="Username">
 					</div>
 
 					<div class="field-wrap">
