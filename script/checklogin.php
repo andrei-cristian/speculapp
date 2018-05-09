@@ -1,45 +1,31 @@
 <?php
+require('db.php');
+session_start();
 
-$host="localhost";
-$username="";
-$password="";
-$db_name="test";
-$tbl_name="members";
-
-//Connect to server
-
-mysql_connect("$host","$username","$password") or die ("cannot conect");
-my_sql_select_db("$db_name") or die ("cannot select database");
-
-//get username&password from form
-
-$myusername=$_POST['myusername'];
-$mypassword=$_POST['mypassword'];
+$myusername=mysqli_real_escape_string($con, $_POST['myusername']);
+$mypassword=mysqli_real_escape_string($con, $_POST['mypassword']);
 
 //anti sql-injection
 
 $myusername=stripslashes($myusername);
 $mypassword=stripslashes($mypassword);
-$myusername=mysql_real_escape_string($myusername);
-$mypassword=mysql_real_escape_string($mypassword);
 
 //password encryption
 $encrypt_password=md5($mypassword);
 
 
-$sql="SELECT * FROM $tbl_name WHERE username=$myusername and password=$encrypt_password";
-$result=mysql_query($sql);
+$sql="SELECT * FROM `users` WHERE username='$myusername' and password='$encrypt_password';";
+$result=mysqli_query($con, $sql) or die(mysql_error());
 
-$count=mysql_num_rows($result);
+$count=mysqli_num_rows($result);
 
 if($count==1){
 
-	session_register("myusername");
-	session_register("encrypt_password");
-	header("location:login_success.php");
+	$_SESSION['username']=$myusername;
+	header("location:../page/Client.html");
 }
 else{
-	echo "Wrong Username or Password";
+	echo "<div><h3>Wrong Username or Password.</h3><br>Click here to <a href='../page/login.html'>Login</a></div>";
 }
 
 ?>
