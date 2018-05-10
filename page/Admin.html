@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel</title>
-    <link href="../style/Client.css" type="text/css" rel="stylesheet">
+    <link href="Client.css" type="text/css" rel="stylesheet">
     <style>
         .changeRate{
             width:50%;
@@ -32,33 +32,44 @@
     <li><a href="#">EXPORT XML</a></li>
     <li><a href="#">EDIT RSS</a></li>
 </ul>
-<table class="exchangerate">
-    <caption>Change Rate</caption>
+<div class="cnt" style="
+    float:  left;
+    margin-left:  35%;
+    margin-top: 5%;
+    border: 1em double orangered;
+    padding: 10px;
+">
+<table >
+    <caption>Range Between</caption>
     <tr>
         <th>Currency</th>
-        <th>Current</th>
+        <th>From</th>
         <th class="To">To</th>
     </tr>
     <tr>
         <td>EUR</td>
-        <td>4.567</td>
+        <td><input type="number" class="changeRate"></td>
         <td><input type="number" class="changeRate"><button>Ok</button></td>
     </tr>
     <tr>
         <td>USD</td>
-        <td>3.456</td>
+        <td><input type="number" class="changeRate"></td>
         <td><input type="number" class="changeRate"><button>Ok</button></td>
     </tr>
     <tr>
         <td>GBP</td>
-        <td>5.567</td>
+        <td><input type="number" class="changeRate"></td>
         <td><input type="number" class="changeRate"><button>Ok</button></td>
     </tr>
 </table>
-<table class="admin">
+    <table style="
+    margin-left:  auto;
+    margin-right:  auto;
+    margin-top: 5%;
+">
     <tr>
         <td>Signing amount</td>
-        <td><form><input type="number" value="signamount"><br></form></td>
+        <td><form><input type="number"><br></form></td>
     </tr>
     <tr>
         <td>Winning threshold</td>
@@ -77,6 +88,8 @@
         <td></td>
     </tr>
 </table>
-
+</div>
 </body>
 </html>
+
+
