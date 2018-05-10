@@ -1,0 +1,24 @@
+.dep{
+    margin-top: 10%;
+    text-align: center;
+    border: 1em double orangered;
+    width: 20%;
+    margin-left: 42%;
+    font-size: 1em;
+    padding-bottom: 2%;
+}
+#addbut{
+    display: block;
+    background-color: #2cac40;
+    color:white;
+    border-radius: 3.5em;
+    padding: 0.6em 0em;
+    font-size: 1vw;
+    font-family: "Arial Black";
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin-left: 25%;
+    margin-top: 10%;
+    width:50% ;
+    height:20%;
+}

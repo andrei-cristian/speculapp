@@ -1,5 +1,5 @@
 *, *:before, *:after {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html{
@@ -7,7 +7,7 @@ html{
 }
 
 body{
-	background-color: rgba(50, 37, 170, 0.9);
+	background-color: #293249;
 }
 
 a{
@@ -40,6 +40,8 @@ button:hover{
 	box-shadow: 0px 4px 10px 4px rgba(65,55,110,0.3);
 	margin-right: auto;
 	margin-left: auto;
+	margin-top: 10%;
+	margin-bottom: 10%;
 }
 
 .tab-group{
@@ -84,9 +86,10 @@ button:hover{
 
 h1{
 	text-align: center;
-	color: #81BEF7;
+	color: white;
 	font-weight: 300;
 	margin: 0px 0px 40px;
+	font-size: 3vw;
 }
 
 label{
@@ -144,6 +147,8 @@ textarea{
 .field-wrap{
 	position: relative;
 	margin-bottom: 40px;
+	width: 100%;
+	margin-bottom:3em;
 }
 
 .top-row:after{
@@ -152,22 +157,14 @@ textarea{
 	clear: both;
 }
 
-.top-row > div {
-	float: left;
-	width: 48%;
-	margin-right: 4%;
-}
 
-.top-row > div:last-child{
-	margin: 0;
-}
 
 .button{
 	border: 0;
 	outline: none;
 	border-radius: 0;
-	padding: 15px 0;
-	font-size: 2rem;
+	padding: 0.3em 0;
+	font-size: 3vw;
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: .1em;
