@@ -4,4 +4,8 @@
     margin-right: 30%;
     text-align: left;
     border: 1em double orangered;
+
+}
+p{
+    padding-left: 5px;
 }
