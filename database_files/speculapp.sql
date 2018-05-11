@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2018 at 11:55 PM
+-- Generation Time: May 11, 2018 at 09:33 AM
 -- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.4
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,10 +32,16 @@ CREATE TABLE `currency` (
   `name` varchar(8) NOT NULL,
   `cur_value` double NOT NULL,
   `min_value` double NOT NULL,
-  `max_value` double NOT NULL,
-  `update_time` int(11) NOT NULL,
-  `last_update` datetime NOT NULL
+  `max_value` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `currency`
+--
+
+INSERT INTO `currency` (`name`, `cur_value`, `min_value`, `max_value`) VALUES
+('EUR', 5.6, 4.3, 6.8),
+('USD', 3.6, 2.3, 5.5);
 
 -- --------------------------------------------------------
 
@@ -44,6 +50,7 @@ CREATE TABLE `currency` (
 --
 
 CREATE TABLE `game` (
+  `last_update` datetime NOT NULL,
   `valid_time` int(11) NOT NULL,
   `init_money` double NOT NULL,
   `win_limit` double NOT NULL,
@@ -54,8 +61,8 @@ CREATE TABLE `game` (
 -- Dumping data for table `game`
 --
 
-INSERT INTO `game` (`valid_time`, `init_money`, `win_limit`, `lose_limit`) VALUES
-(300, 3000, 6000, 100);
+INSERT INTO `game` (`last_update`, `valid_time`, `init_money`, `win_limit`, `lose_limit`) VALUES
+('2018-05-11 10:37:00', 300, 1000, 2000, 100);
 
 -- --------------------------------------------------------
 
@@ -119,6 +126,12 @@ DELIMITER ;
 --
 ALTER TABLE `currency`
   ADD PRIMARY KEY (`name`);
+
+--
+-- Indexes for table `game`
+--
+ALTER TABLE `game`
+  ADD PRIMARY KEY (`last_update`);
 
 --
 -- Indexes for table `hof`
