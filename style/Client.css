@@ -65,7 +65,6 @@ li a:hover {
     width:25%;
     height:25%;
     float:left;
-    font-size:1vw;
     margin-top: 5%;
     margin-right:5%;
     margin-left:5%;
@@ -120,7 +119,34 @@ li a:hover {
     border-left: 1px solid black;
     font-style: italic;
 }
+    @media screen and (max-width : 450px){
+       .container {
+           float: none;
+           display: block;
+           text-align: left;
+           font-size: 3vw;
+       }
+        li{
+            width: 100%;
+        }
+        .game{
+            width: fit-content;
+            margin-left: 0px;
+            margin-right: 0px;
+            font-size: 2.5vw;
+        }
+        .deposit
+        {
+            font-size: 2.5vw;
+        }
 
 
+    }
+    @media screen and (max-width :630px) and (min-width: 451px) {
+        .game{
+            font-size: 1.8vw;
+        }
+
+    }
 
 
