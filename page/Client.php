@@ -1,3 +1,8 @@
+<?php
+session_start();
+require ('../script/session_check.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,17 +11,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpeculApp</title>
     <link href="../style/Client.css" type="text/css" rel="stylesheet">
-    <link rel="stylesheet" media="(min-width:630px) and (max-width:900px)" href="../style/Client_max900.css">
-    <link rel="stylesheet" media="(min-width:450px) and (max-width:629px)" href="../style/Client_min450-max630.css">
-    <link rel="stylesheet" media="(max-width: 450px)" href="../style/Client_max450.css">
 </head>
 <body>
 <h1 class="container">SpeculApp</h1>
 <ul class="container">
-    <li><a href="Client.html">Home</a> </li>
-    <li><a href="statistics.pdf" download="">Hall of fame</a></li>
-    <li><a href="About.html">About</a></li>
-    <li><a href="Login.html">Login</a></li>
+    <li><a href="Client.php">Home</a> </li>
+    <li><a href="statistics.php">Hall of fame</a></li>
+    <li><a href="About.php">About</a></li>
+    <li><a href="../script/logout.php">Logout</a></li>
 </ul>
 <div class="game">
 <table class="exchangerate" >
@@ -64,7 +66,7 @@
 
     </table>
 <div class="change">
-    <form action="Deposit.html"><input  class="deposit" type="submit" value="Deposit"></form>
+    <form action="Deposit.php"><input  class="deposit" type="submit" value="Deposit"></form>
     <p>Total Value:2000 ron </p>
     <table class="tableconvert">
         <tr>

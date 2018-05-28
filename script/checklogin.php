@@ -22,16 +22,16 @@ $count=mysqli_num_rows($result);
 if($count==1 and $user['role']=='user'){
 
 	$_SESSION['username']=$myusername;
-	header("location:../page/Client.html");
+	header("location:../page/Client.php");
 }
 if($count==1 and $user['role']=='admin'){
 
 	$_SESSION['username']=$myusername;
-	header("location:../page/Admin.html");
+	header("location:../page/Admin.php");
 }
 
 if($count==0){
-	echo "<div><h3>Wrong Username or Password.</h3><br>Click here to <a href='../page/login.html'>Login</a></div>";
+	echo "<div><h3>Wrong Username or Password.</h3><br>Click here to <a href='../page/login.php'>Login</a></div>";
 }
 
 ?>

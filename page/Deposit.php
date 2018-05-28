@@ -1,3 +1,7 @@
+<?php
+session_start();
+require ('../script/session_check.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +16,10 @@
 <body>
 <h1 class="container">SpeculApp</h1>
 <ul class="container">
-    <li><a href="Client.html">Home</a> </li>
-    <li><a href="statistics.pdf" download="">Hall of fame</a></li>
-    <li><a href="About.html">About</a></li>
-    <li><a href="Login.html">Login</a></li>
+    <li><a href="Client.php">Home</a> </li>
+    <li><a href="statistics.php">Hall of fame</a></li>
+    <li><a href="About.php">About</a></li>
+    <li><a href="../script/logout.php">Logout</a></li>
 </ul>
 <div class="dep">
     <h2>Deposit</h2>
@@ -23,7 +27,7 @@
         Amount: <br>
         <input type="number"><br>
     </form>
-    <form action="Client.html"><input  id="addbut" type="submit" value="Add"></form>
+    <form action="Client.php"><input  id="addbut" type="submit" value="Add"></form>
 </div>
 </body>
 

@@ -3,19 +3,16 @@
 <head>
     <link href="../style/Client.css" rel="stylesheet" type="text/css">
     <link href="../style/About.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" media="(max-width:900px)" href="../style/Client_max900.css">
-    <link rel="stylesheet" media="(min-width:450) and (max-width:900px)" href="../style/Client_min450-max900.css">
-    <link rel="stylesheet" media="(max-width: 450px)" href="../style/Client_max450.css">
     <meta charset="UTF-8">
     <title>About</title>
 </head>
 <body>
 <h1 class="container">SpeculApp</h1>
 <ul class="container">
-    <li><a href="Client.html">Home</a> </li>
-    <li><a href="Statistics.html">Hall of fame</a></li>
-    <li><a href="About.html">About</a></li>
-    <li><a href="Login.html">Login</a></li>
+    <li><a href="Client.php">Home</a> </li>
+    <li><a href="Statistics.php">Hall of fame</a></li>
+    <li><a href="About.php">About</a></li>
+    <li><a href="../script/logout.php">Logout</a></li>
 </ul>
 <div class="reg">
 <h2 style="text-align: center">Regulations</h2>

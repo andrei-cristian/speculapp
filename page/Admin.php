@@ -1,3 +1,8 @@
+<?php
+session_start();
+require ('../script/check_admin.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,9 +10,6 @@
     <meta charset="UTF-8">
     <title>Admin Panel</title>
     <link href="../style/Client.css" type="text/css" rel="stylesheet">
-    <link rel="stylesheet" media="(max-width:900px)" href="../style/Client_max900.css">
-    <link rel="stylesheet" media="(min-width:450) and (max-width:900px)" href="../style/Client_min450-max900.css">
-    <link rel="stylesheet" media="(max-width: 450px)" href="../style/Client_max450.css">
     <style>
         .changeRate{
             width:50%;
@@ -34,10 +36,12 @@
     <li><a href="#">EXPORT JSON</a> </li>
     <li><a href="#">EXPORT XML</a></li>
     <li><a href="#">EDIT RSS</a></li>
+    <li><a href="../script/logout.php">Logout</a></li>
 </ul>
 <div class="cnt" style="
     float:  left;
-    margin-left:  35%;
+    margin-left:  auto;
+    margin-right: auto;
     margin-top: 5%;
     border: 1em double orangered;
     padding: 10px;

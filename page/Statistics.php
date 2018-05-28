@@ -1,21 +1,24 @@
+<?php
+session_start();
+require ('../script/session_check.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="Statistics.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" media="(max-width:900px)" href="../style/Client_max900.css">
-    <link rel="stylesheet" media="(min-width:450) and (max-width:900px)" href="../style/Client_min450-max900.css">
-    <link rel="stylesheet" media="(max-width: 450px)" href="../style/Client_max450.css">
+    <link href="../style/Statistics.css" rel="stylesheet" type="text/css">
+    <link href="../style/Client.css" rel="stylesheet" type="text/css">
     <meta charset="UTF-8">
     <title>Statistics</title>
 </head>
 <body>
     <h1 class="container">SpeculApp</h1>
     <ul class="container">
-    <li><a href="Client.html">Home</a> </li>
-    <li><a href="Statistics.html">Hall of fame</a></li>
-    <li><a href="About.html">About</a></li>
+    <li><a href="Client.php">Home</a> </li>
+    <li><a href="Statistics.php">Hall of fame</a></li>
+    <li><a href="About.php">About</a></li>
+    <li><a href="../script/logout.php">Logout</a></li>
     </ul>
-    <div>
+    <div style="float:left;margin-left:auto;margin-right: auto;padding:10px">
     <p>Top 10 Richest Players</p>
     <table>
         <tr>

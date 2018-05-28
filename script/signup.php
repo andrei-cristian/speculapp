@@ -39,6 +39,6 @@ $errors = array();
 		$query = "INSERT INTO users (username, password, email, role, created_at, updated_at) VALUES ('$myusername','$encrypt_password', '$email', 'user', now(), now())";
 		mysqli_query($con,$query);
 		$_SESSION['username'] = $myusername;
-		header("location:../page/Client.html");
+		header("location:../page/Client.php");
 	}
 ?>
