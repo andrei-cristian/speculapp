@@ -25,24 +25,11 @@ require ('../script/session_check.php');
     <caption style="padding-bottom: 0.5em">Exchange Rate</caption>
     <tr>
         <th>Currency</th>
-        <th>Bid</th>
-        <th>Ask</th>
+        <th>Value</th>
     </tr>
-        <tr>
-        <td>EUR</td>
-        <td>4.567</td>
-        <td>4.543</td>
-    </tr>
-    <tr>
-        <td>USD</td>
-        <td>3.456</td>
-        <td>3.432</td>
-    </tr>
-    <tr>
-        <td>GBP</td>
-        <td>5.567</td>
-        <td>5.432</td>
-    </tr>
+
+    <?php require "../script/get_rate.php"?>
+    
 
 </table>
 
@@ -96,7 +83,7 @@ require ('../script/session_check.php');
     <table class="portofolio">
         <caption>Portofolio Report</caption>
         <Tr>
-            <th>Tranzaction</th>
+            <th>Transaction</th>
             <th>Result(in RON)</th>
         </Tr>
         <tr>
