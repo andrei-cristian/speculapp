@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2018 at 11:34 AM
+-- Generation Time: May 30, 2018 at 02:01 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -74,6 +74,7 @@ INSERT INTO `game` (`valid_time`, `init_money`, `win_limit`, `lose_limit`) VALUE
 --
 
 CREATE TABLE `hof` (
+  `username` varchar(32) NOT NULL,
   `user_id` int(11) NOT NULL,
   `credit` int(11) NOT NULL,
   `updated_at` datetime NOT NULL
@@ -83,9 +84,9 @@ CREATE TABLE `hof` (
 -- Dumping data for table `hof`
 --
 
-INSERT INTO `hof` (`user_id`, `credit`, `updated_at`) VALUES
-(2, 0, '2018-05-11 00:24:54'),
-(3, 0, '2018-05-11 00:25:58');
+INSERT INTO `hof` (`username`, `user_id`, `credit`, `updated_at`) VALUES
+('test1', 2, 1100, '2018-05-30 15:01:10'),
+('test2', 3, 0, '2018-05-30 14:36:11');
 
 -- --------------------------------------------------------
 
@@ -130,7 +131,7 @@ INSERT INTO `users` (`ID`, `username`, `password`, `email`, `role`, `created_at`
 -- Triggers `users`
 --
 DELIMITER $$
-CREATE TRIGGER `add_to_hof` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO `speculapp`.`hof`(user_id,points,updated_at) VALUES (NEW.id,0,now())
+CREATE TRIGGER `add_to_hof` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO `speculapp`.`hof`(username,user_id,points,updated_at) VALUES (NEW.username, NEW.id, 0, now())
 $$
 DELIMITER ;
 
@@ -148,7 +149,9 @@ ALTER TABLE `currency`
 -- Indexes for table `hof`
 --
 ALTER TABLE `hof`
-  ADD KEY `user_id` (`user_id`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `user_id_2` (`user_id`),
+  ADD KEY `user_id` (`user_id`) USING BTREE;
 
 --
 -- Indexes for table `transactions`

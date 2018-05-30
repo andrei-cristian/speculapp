@@ -22,12 +22,11 @@ require ('../script/session_check.php');
     <li><a href="../script/logout.php">Logout</a></li>
 </ul>
 <div class="dep">
-    <h2>Deposit</h2>
-    <form>
-        Amount: <br>
-        <input type="number"><br>
-    </form>
-    <form action="Client.php"><input  id="addbut" type="submit" value="Add"></form>
+    <form action="../script/deposit_amt.php" method="post">
+        <h2>Deposit</h2>
+            Amount: <br>
+            <input type="number" name="amount"><br>
+        <input id="addbut" type="submit" value="Add">
 </div>
 </body>
 
