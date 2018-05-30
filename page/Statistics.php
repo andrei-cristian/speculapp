@@ -26,51 +26,7 @@ require ('../script/session_check.php');
             <th>Name</th>
             <th>Earnings</th>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>John Doe</td>
-            <td>10</td>
-        </tr>
-        <tr><td>2</td>
-            <td>John Doe</td>
-            <td>9</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>John Doe</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>John Doe</td>
-            <td>7</td>
-        </tr> <tr>
-        <td>5</td>
-        <td>John Doe</td>
-        <td>6</td>
-    </tr>
-        <tr>
-            <td>6</td>
-            <td>John Doe</td>
-            <td>5</td>
-        </tr> <tr>
-        <td>7</td>
-        <td>John Doe</td>
-        <td>4</td>
-    </tr>
-        <tr><td>8</td>
-            <td>John Doe</td>
-            <td>3</td>
-        </tr> <tr>
-        <td>9</td>
-        <td>John Doe</td>
-        <td>2</td>
-    </tr>
-        <tr>
-            <td>10</td>
-            <td>John Doe</td>
-            <td>1</td>
-        </tr>
+        <?php require('../script/get_hof.php');?>
     </table>
     </div>
 
