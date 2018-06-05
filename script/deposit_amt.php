@@ -1,6 +1,7 @@
 <?php
 
 require ('db.php');
+require ('session_check.php');
 session_start();
 $user_name=$_SESSION['username'];
 

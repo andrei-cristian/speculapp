@@ -1,6 +1,7 @@
 <?php
 
 require('db.php');
+require ('session_check.php');
 
 $sql = "SELECT name, cur_value FROM `currency`";
 $result = mysqli_query($con,$sql);

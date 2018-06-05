@@ -46,24 +46,54 @@ require ('../script/check_admin.php');
     border: 1em double orangered;
     padding: 10px;
 ">
-<table>
+<table >
     <caption>Range Between</caption>
     <tr>
         <th>Currency</th>
         <th>From</th>
-        <th>To</th>
-        <th>Time</th>
+        <th class="To">To</th>
     </tr>
-    <?php require('../script/edit_currency.php'); ?>
+    <tr>
+        <td>EUR</td>
+        <td><input type="number" class="changeRate"></td>
+        <td><input type="number" class="changeRate"><button>Ok</button></td>
+    </tr>
+    <tr>
+        <td>USD</td>
+        <td><input type="number" class="changeRate"></td>
+        <td><input type="number" class="changeRate"><button>Ok</button></td>
+    </tr>
+    <tr>
+        <td>GBP</td>
+        <td><input type="number" class="changeRate"></td>
+        <td><input type="number" class="changeRate"><button>Ok</button></td>
+    </tr>
 </table>
     <table style="
     margin-left:  auto;
     margin-right:  auto;
     margin-top: 5%;
 ">
-  
-    <?php require('../script/edit_gameinfo.php'); ?>
-
+    <tr>
+        <td>Signing amount</td>
+        <td><form><input type="number"><br></form></td>
+    </tr>
+    <tr>
+        <td>Winning threshold</td>
+        <td><input type="number" name="wintresh"><br></td>
+    </tr>
+    <tr>
+        <td>Losing threshold</td>
+        <td><input type="number" name="lostresh"><br></td>
+    </tr>
+    <tr>
+        <td>Period of validity</td>
+        <td> <input type="number"><br></td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="Submit"></td>
+        <td></td>
+    </tr>
 </table>
 </div>
 </body>
