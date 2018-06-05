@@ -42,8 +42,8 @@ if (mysqli_num_rows($result)>0){
 		<tr>
 			<td><?php echo $row['name'];?></td>
 			<td><input type="hidden" name="name" value="<?php echo $row['name'];?>"></td>
-			<td><input type="number" class="changeRate" name="min_value" value="<?php echo $row['min_value'];?>"></td>
-			<td><input type="number" class="changeRate" name="max_value" value="<?php echo $row['max_value'];?>"></td>
+			<td><input type="number" step="any" class="changeRate" name="min_value" value="<?php echo $row['min_value'];?>"></td>
+			<td><input type="number" step="any" class="changeRate" name="max_value" value="<?php echo $row['max_value'];?>"></td>
 			<td><input type="number" class="changeRate" name="update_time" value="<?php echo $row['update_time'];?>"></td>
 			<td><input type="submit" name="submit" value="Modify"></button></td>
 			<td><input type="submit" name="delete" value="Delete"></button></td>
