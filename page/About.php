@@ -1,3 +1,7 @@
+<?php
+session_start();
+require ('../script/session_check.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

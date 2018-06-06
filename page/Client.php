@@ -28,7 +28,7 @@ require ('../script/session_check.php');
         <th>Value</th>
     </tr>
 
-    <?php require "../script/get_rate.php"?>
+    <?php require("../script/get_rate.php") ?>
     
 
 </table>
@@ -54,30 +54,25 @@ require ('../script/session_check.php');
     </table>
 <div class="change">
     <form action="Deposit.php"><input  class="deposit" type="submit" value="Deposit"></form>
-    <p>Total Value:2000 ron </p>
+    <p>Total Value:<?php require('../script/get_amt.php')?> ron </p>
     <table class="tableconvert">
+    <form>
         <tr>
             <td>From: </td>
             <td> <select style="height: 1.3em; width: 4em;">
-                <option value="euro">EUR</option>
-                <option value="dolar">USD</option>
-                <option value="lira">GBP</option>
+                <?php require('../script/get_cur_names.php');?>
             </select></td>
         </tr>
 
         <tr>
             <td>To: </td>
             <td>  <select style="height: 1.3em; width: 4em;">
-                <option value="euro">EUR</option>
-                <option value="dolar">USD</option>
-                <option value="lira">GBP</option>
+                <?php require('../script/get_cur_names.php');?>
             </select></td>
         </tr></table>
-    <form>
         Amount: <br>
         <input  style=" height: 0.9em; width: 5em;" type="number"><br>
-    </form>
-    <form><input class="deposit" type="submit" value="Change"></form>
+        <input class="deposit" name="exchange" type="submit" value="Change"></form>
 </div>
 
     <table class="portofolio">
