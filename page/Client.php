@@ -35,44 +35,33 @@ require ('../script/session_check.php');
 
     <table class="budget">
         <caption style="padding-bottom: 0.5em">Available</caption>
-        <tr>
-            <td>50 EUR</td>
-        </tr>
-        <tr>
-            <td>60 USD</td>
-        </tr>
-            <tr>
-                <td>60 USD</td>
-            </tr>
-            <tr>
-                <td>60 USD</td>
-            </tr>
-            <tr>
-                <td>60 USD</td>
-            </tr>
+        <?php require('../script/get_available_cur.php');?>
 
     </table>
 <div class="change">
     <form action="Deposit.php"><input  class="deposit" type="submit" value="Deposit"></form>
-    <p>Total Value:<?php require('../script/get_amt.php')?> ron </p>
+    <p>Total Value:<?php require('../script/get_amt.php');?> ron </p>
+    <form action="../script/exchange.php" method="post">
     <table class="tableconvert">
-    <form>
         <tr>
             <td>From: </td>
-            <td> <select style="height: 1.3em; width: 4em;">
+            <td> <select name="option1" style="height: 1.3em; width: 4em;">
+                <option value="RON">RON</option>
                 <?php require('../script/get_cur_names.php');?>
             </select></td>
         </tr>
 
         <tr>
             <td>To: </td>
-            <td>  <select style="height: 1.3em; width: 4em;">
+            <td>  <select name ="option2" style="height: 1.3em; width: 4em;">
                 <?php require('../script/get_cur_names.php');?>
+                <option value="RON">RON</option>
             </select></td>
         </tr></table>
         <br> Amount: <br>
-        <input  style=" height: 0.9em; width: 5em;" type="number"><br>
-        <input class="deposit" name="exchange" type="submit" value="Change"></form>
+        <input name="exchange_amount" style=" height: 0.9em; width: 5em;" type="number"><br>
+        <input class="deposit" name="exchange" type="submit" value="Change">
+        </form>
 </div>
 
     <table class="portofolio">

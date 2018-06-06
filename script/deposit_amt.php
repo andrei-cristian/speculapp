@@ -12,6 +12,9 @@ $result2=mysqli_query($con,$sql2) or die(mysqli_error($con));
 $result1=mysqli_fetch_assoc($result1)['credit'];
 $result2=mysqli_fetch_assoc($result2)['win_limit'];
 $deposit_amt=mysqli_real_escape_string($con, $_POST['amount']);
+if ($deposit_amt<=0){
+	header("location:../page/Client.php?fail");
+}
 $result3=$result1+$deposit_amt;
 if ($result3>$result2){
 	sleep(1);
@@ -21,7 +24,7 @@ if ($result3>$result2){
 else{
 	$query="UPDATE `hof` SET credit='$result3',updated_at=now()  WHERE username='$user_name';";
 	mysqli_query($con,$query);
-	header("location:../page/Client.php?deposit_succ");
+	header("location:../page/Client.php?deposit_success");
 }
 
 

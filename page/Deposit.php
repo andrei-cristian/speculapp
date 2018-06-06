@@ -25,7 +25,7 @@ require ('../script/session_check.php');
     <form action="../script/deposit_amt.php" method="post">
         <h2>Deposit</h2>
             Amount: <br>
-            <input type="number" name="amount"><br>
+            <input type="number" min="0" name="amount"><br>
         <input id="addbut" type="submit" value="Add">
 </div>
 </body>
