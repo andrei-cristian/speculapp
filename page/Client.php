@@ -70,7 +70,7 @@ require ('../script/session_check.php');
                 <?php require('../script/get_cur_names.php');?>
             </select></td>
         </tr></table>
-        Amount: <br>
+        <br> Amount: <br>
         <input  style=" height: 0.9em; width: 5em;" type="number"><br>
         <input class="deposit" name="exchange" type="submit" value="Change"></form>
 </div>
