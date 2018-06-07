@@ -39,12 +39,12 @@ require ('../script/check_admin.php');
     <li><a href="../script/logout.php">Logout</a></li>
 </ul>
 <div class="cnt" style="
-    float:  left;
     margin-left:  auto;
     margin-right: auto;
     margin-top: 5%;
     border: 1em double orangered;
     padding: 10px;
+    width: 80%;
 ">
 <table>
     <caption>Range Between</caption>
