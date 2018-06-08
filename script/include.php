@@ -10,16 +10,21 @@ function get_user_data($username){
 	else return 0;
 }
 
-function get_user_available_currency($username,$currencyname){
+function get_user_funds($username,$currencyname){
 	require('db.php');
+	if ($currencyname=='RON'){
+		$ret=mysqli_fetch_assoc(get_user_data($username))['credit'];
+		return $ret;
+	}
+
 	$sql="SELECT * FROM `available` where username='$username' and currency_name='$currencyname';";
 	$result=mysqli_query($con,$sql);
 	if($result){
-		return $result;
+		$ret = mysqli_fetch_assoc($result)['amount'];
+		return $ret;
 	}
 	else return 0;
 }
-
 
 function get_game_data(){
 	require('db.php');
@@ -121,39 +126,69 @@ function check_amount($amount){
 	return 1;
 }
 
-function get_currency_amount($username,$currencyname,$option=0){
-	require_once('db.php');
-	if ($currencyname=='RON'){
-		$amount=mysqli_fetch_assoc(get_user_data($username))['amount'];
-		return $amount;
-	}
-	else{
-		$result=get_user_available_currency($username,$currencyname);
-		if ($result){
-			return(mysqli_fetch_assoc($result)['amount']);
-	}
-		else{
-			if ($option==1){
-				$sql="INSERT INTO `available` ('$user_name','$option2','0',now());";
-				mysqli_query($con,$sql);
-			}
-			else{
-				return 0;
-			}
-		}
-	}
+function insert_currency_available($username,$currencyname){
+	require('db.php');
+	$sql="INSERT INTO `available`(username,currency_name,amount,updated_at) VALUES ('$username','$currencyname','0',now());";
+	mysqli_query($con,$sql) or die(mysqli_error($con));
+
 }
 
 function update_currency_amount($username,$currencyname,$value){
-	$current=get_currency_amount($username,$currencyname,1);
+	require('db.php');
+
+	$current=get_user_funds($username,$currencyname);
 	if ($currencyname=='RON'){
 		set_credit($username,$value);
+		return;
+	}
+
+	if ($value==0){
+		$sql="DELETE FROM `available` WHERE currency_name='$currencyname' and username='$username';";
+	}
+	if ($value<0){
+		header("location:../page/Client.php?no_infinite_money_for_you");
+		return;
 	}
 	else{
-		$sql="UPDATE `available` SET amount='$value', updated_at=now() WHERE username='$username' and currency_name='$currencyname';";
-		mysqli_query($con,$sql);
+		$sql="UPDATE `available` SET amount='$value',updated_at=now() WHERE username='$username' and currency_name='$currencyname';";
+	}
+	mysqli_query($con,$sql) or die(mysqli_error($con));
+	return;
+}
+
+function take_money($username,$currencyname,$amount){
+	$available=get_user_funds($username,$currencyname);
+	$ok=1;
+	if($available<=0){
+		$ok=0;
+		return 0;
+	}
+
+	$available=$available-$amount;
+
+	if ($available<0){
+		$ok=0;
+		return 0;
+	}
+	if ($ok==1){
+		update_currency_amount($username,$currencyname,$available);
+		return 1;
+	}
+	else{
+		return 0;
+		header("location:../page/Client.php?insuficient_funds");
 	}
 }
 
+function insert_money($username,$currencyname,$value){
+	$current=get_user_funds($username,$currencyname);
+	if ($current==0){
+		insert_currency_available($username,$currencyname);
+	}
+	$new_value=$current+$value;
+	echo $current,'<p>',$new_value;
+	update_currency_amount($username,$currencyname,$new_value);
+	header("location:../page/Client.php?exchange_success");
+}
 
 ?>

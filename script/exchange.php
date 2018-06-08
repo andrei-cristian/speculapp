@@ -16,27 +16,9 @@ $option2=stripslashes($option2);
 
 
 if (!check_amount($amount)){
-	return;
+	return 0;
 }
 
-function take_money(){
-	$available=get_currency_amount($user_name,$option1);
-	if(!$available){
-		header("location:../page/Client.php?insuficient_funds");
-		return;
-	}
-	
-
-}
-
-else{
-	$available=$available-$amount;
-	if ($available<0){
-		header("location:../page/Client.php?insuficient_funds");
-		return;
-	}
-	else update_currency_amount($user_name,$option1,$available);
-}
 
 $value_from=get_currency_value($option1);
 
@@ -44,20 +26,11 @@ $value_to=get_currency_value($option2);
 
 $exchangeval=(($amount*$value_from)/$value_to);
 
-
-if ($option2=='RON'){
-	$new_credit=mysqli_fetch_assoc(get_user_data($user_name))['credit'];
-	$new_credit=$new_credit+$exchangeval;
-	//$sql="UPDATE `hof` SET credit=credit+'$exchangeval' WHERE username=$user_name;";
-	//mysqli_query($con,$sql);
-	set_credit($user_name,$new_credit);
-	header("location:../page/Client.php?exchange_success");
+if(take_money($user_name,$option1,$amount)){
+	insert_money($user_name,$option2,$exchangeval);
 }
 else{
-	$sql="UPDATE `available` SET amount=amount+$exchangeval WHERE username=$user_name AND currency_name='$option2';";
-	mysqli_query($con,$sql);
-	header("location:../page/Client.php?exchange_success");
+	header("location:../page/Client.php?exchange_denied");
 }
 
-	echo $option1,' ',$value_from,'<p>',$option2,' ',$value_to,'<p>',$exchangeval;
 ?>
