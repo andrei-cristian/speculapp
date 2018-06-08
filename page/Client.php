@@ -59,7 +59,7 @@ require ('../script/session_check.php');
             </select></td>
         </tr></table>
         <br> Amount: <br>
-        <input name="exchange_amount" required min="0" style=" height: 0.9em; width: 5em;" type="number"><br>
+        <input name="exchange_amount" required min="0" step="any" style=" height: 0.9em; width: 5em;" type="number"><br>
         <input class="deposit" name="exchange" type="submit" value="Change">
         </form>
 </div>

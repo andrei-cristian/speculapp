@@ -145,12 +145,14 @@ function update_currency_amount($username,$currencyname,$value){
 	if ($value==0){
 		$sql="DELETE FROM `available` WHERE currency_name='$currencyname' and username='$username';";
 	}
-	if ($value<0){
-		header("location:../page/Client.php?no_infinite_money_for_you");
-		return;
-	}
 	else{
-		$sql="UPDATE `available` SET amount='$value',updated_at=now() WHERE username='$username' and currency_name='$currencyname';";
+		if ($value<0){
+			header("location:../page/Client.php?no_infinite_money_for_you");
+			return;
+		}
+		else{
+			$sql="UPDATE `available` SET amount='$value',updated_at=now() WHERE username='$username' and currency_name='$currencyname';";
+		}
 	}
 	mysqli_query($con,$sql) or die(mysqli_error($con));
 	return;
@@ -182,11 +184,10 @@ function take_money($username,$currencyname,$amount){
 
 function insert_money($username,$currencyname,$value){
 	$current=get_user_funds($username,$currencyname);
-	if ($current==0){
+	if ($current==0 and $currencyname!='RON'){
 		insert_currency_available($username,$currencyname);
 	}
 	$new_value=$current+$value;
-	echo $current,'<p>',$new_value;
 	update_currency_amount($username,$currencyname,$new_value);
 	header("location:../page/Client.php?exchange_success");
 }
