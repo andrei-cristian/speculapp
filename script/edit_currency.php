@@ -2,6 +2,7 @@
 
 require ('db.php');
 require('check_admin.php');
+include_once ('include.php');
 
 if (isset($_POST['submit'])){
 	$name = $_POST['name'];
@@ -14,27 +15,18 @@ if (isset($_POST['submit'])){
 }
 if (isset($_POST['delete'])){
 	$name=$_POST['name'];
-	$sql="DELETE FROM `currency` WHERE name='$name'";
-	mysqli_query($con,$sql);
+	$tablename="currency";
+	$colname="name";
+	delete_from_table($tablename,$colname,$name);
 	header("location:../page/Admin.php?delete_currency_success");
 }
 if (isset($_POST['insert'])){
 	$name=$_POST['name'];
-	$currency_check_query = "SELECT * FROM `currency` WHERE name='$name' LIMIT 1";
-	$result = mysqli_query($con,$currency_check_query);
-	$result = mysqli_fetch_assoc($result);
-	if ($result) {
-		header("location:../page/Admin.php?create_currency_fail");
-	}
-	else {
-
-	$sql="INSERT INTO `currency`(name,min_value,max_value,update_time,last_update) VALUES('$name','0','0','0',now());";
-	mysqli_query($con,$sql);
-	header("location:../page/Admin.php?create_currency_success"); }
+	create_currency($name);
+	header("location:../page/Admin.php?$name_created_successfully");
 }
 
-$sql="SELECT name, min_value, max_value, update_time FROM `currency`";
-$result=mysqli_query($con,$sql);
+$result=get_currency();
 
 if (mysqli_num_rows($result)>0){
 	while ($row=mysqli_fetch_assoc($result)){ ?>

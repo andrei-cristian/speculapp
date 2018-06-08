@@ -2,10 +2,10 @@
 
 require('db.php');
 require('session_check.php');
+include_once('include.php');
 
-$uname=$_SESSION['username'];
-$sql="SELECT credit FROM `hof` WHERE username='$uname';";
-$result=mysqli_query($con,$sql);
+$username=$_SESSION['username'];
+$result=get_user_data($username);
 $result=mysqli_fetch_assoc($result);
 echo $result['credit'];
 

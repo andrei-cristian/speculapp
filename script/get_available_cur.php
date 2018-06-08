@@ -2,11 +2,11 @@
 
 require('db.php');
 require('session_check.php');
+include_once('include.php');
 
 $uname=$_SESSION['username'];
 
-$sql="SELECT * FROM `available` WHERE username='$uname';";
-$result=mysqli_query($con,$sql);
+$result=value_in_table('available','username',$uname);
 if (mysqli_num_rows($result)>0){
 	while($row=mysqli_fetch_assoc($result)){
 		?>

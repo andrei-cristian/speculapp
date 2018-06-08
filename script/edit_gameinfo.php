@@ -1,6 +1,7 @@
 <?php
 require('db.php');
 require('check_admin.php');
+include_once('include.php');
 
 if (isset($_POST['submit'])){
 	$init_money=$_POST['signamt'];
@@ -14,8 +15,7 @@ if (isset($_POST['submit'])){
 	header("location:../page/Admin.php");
 }
 
-$sql="SELECT init_money,win_limit,lose_limit,valid_time FROM `game`";
-$result = mysqli_query($con,$sql);
+$result = get_game_data();
 $result = mysqli_fetch_assoc($result);
 
 ?>
