@@ -1,7 +1,7 @@
 <?php
 
 require('db.php');
-//require('session_check.php');
+require('session_check.php');
 include_once('include.php');
 
 session_start();

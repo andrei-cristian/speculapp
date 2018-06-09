@@ -69,23 +69,9 @@ require ('../script/session_check.php');
         <Tr>
             <th>Transaction</th>
             <th>Result(in RON)</th>
+            <th>Date of transaction</th>
         </Tr>
-        <tr>
-            <td>RON/EUR</td>
-            <TD>-1050</TD>
-        </tr>
-        <TR>
-            <TD>EUR/USD</TD>
-            <TD>550</TD>
-        </TR>
-            <TR>
-                <TD>EUR/USD</TD>
-                <TD>550</TD>
-            </TR>
-            <TR>
-                <TD>EUR/USD</TD>
-                <TD>550</TD>
-            </TR>
+        <?php require('../script/get_transactions.php'); ?>
     </table>
 </div>
 

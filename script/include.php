@@ -18,7 +18,7 @@ function get_user_funds($username,$currencyname){
 	}
 
 	$sql="SELECT * FROM `available` where username='$username' and currency_name='$currencyname';";
-	$result=mysqli_query($con,$sql);
+	$result=mysqli_query($con,$sql) or die(mysqli_error($con));
 	if($result){
 		$ret = mysqli_fetch_assoc($result)['amount'];
 		return $ret;
@@ -34,6 +34,13 @@ function get_game_data(){
 		return $result;
 	}
 	else return 0;
+}
+
+function get_user_transactions($username){
+	require('db.php');
+	$sql="SELECT * FROM `transactions` WHERE username='$username' ORDER BY created_at DESC";
+	$result=mysqli_query($con,$sql) or die(mysqli_error($con));
+		return $result;
 }
 
 function set_credit($username,$credit){
@@ -190,6 +197,12 @@ function insert_money($username,$currencyname,$value){
 	$new_value=$current+$value;
 	update_currency_amount($username,$currencyname,$new_value);
 	header("location:../page/Client.php?exchange_success");
+}
+
+function create_transaction($username,$currency1,$currency2,$result){
+	require('db.php');
+	$sql="INSERT INTO `transactions` ('username','FCUR,'TCUR','result,'created_at') VALUES ('$username','$currency1','$currency2','$result',now());";
+	mysqli_query($con,$sql);
 }
 
 ?>
