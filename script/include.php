@@ -75,16 +75,44 @@ function get_currency_value($currency_name){
 	}
 }
 
+function get_exchange_value($amount,$currency1,$currency2){
+	$value_from=get_currency_value($currency1);
+	$value_to=get_currency_value($currency2);
+	$exchangeval=(($amount*$value_from)/$value_to);
+
+	return $exchangeval;
+
+}
+
 function create_currency($CURname){
 	require('db.php');
 	$sql="SELECT * FROM `currency` WHERE name='$CURname';";
 	$result=mysqli_query($con,$sql) or die(mysqli_error($con));
 	if ($result){
 		if(mysqli_num_rows($result)==0){
-			$sql="INSERT INTO `currency` VALUES ('$CURname','0','0','0','0',now());";
+			$sql="INSERT INTO `currency` VALUES ('$CURname','0','0','0','0','30',now());";
 			mysqli_query($con,$sql) or die (mysqli_error($con));
 		}
 	}
+}
+
+function remove_currency($currencyname){
+	require('db.php');
+	$result=value_in_table('available','currency_name',$currencyname);
+	if ($result){
+		while($row=mysqli_fetch_assoc($result)){
+			$id=$row['id'];
+			$username=$row['username'];
+			$amount=$row['amount'];
+			$amount=get_exchange_value($amount,$currencyname,'RON');
+			insert_money($username,'RON',$amount);
+			delete_from_table('available','id',$id);
+			create_transaction($username,$currencyname,'RON');
+		}
+	}
+	delete_from_table('currency','name',$currencyname);
+	currency_drop_event($currencyname);
+
 }
 
 function value_in_table($tablename,$colname,$value){
@@ -107,6 +135,11 @@ function delete_from_table($tablename,$colname,$value){
 			mysqli_query($con,$sql) or die (mysqli_error($con));
 		}
 	}
+}
+
+function update_user_transaction($username,$value,$date){
+	require('db.php');
+	$result=value_in_table('transactions','result',$value);
 }
 
 function update_table_value($tablename,$col_replace,$value_new,$col_find,$value_search){
@@ -140,7 +173,7 @@ function insert_currency_available($username,$currencyname){
 
 }
 
-function update_currency_amount($username,$currencyname,$value){
+function update_usercurrency_amount($username,$currencyname,$value){
 	require('db.php');
 
 	$current=get_user_funds($username,$currencyname);
@@ -180,7 +213,7 @@ function take_money($username,$currencyname,$amount){
 		return 0;
 	}
 	if ($ok==1){
-		update_currency_amount($username,$currencyname,$available);
+		update_usercurrency_amount($username,$currencyname,$available);
 		return 1;
 	}
 	else{
@@ -195,14 +228,49 @@ function insert_money($username,$currencyname,$value){
 		insert_currency_available($username,$currencyname);
 	}
 	$new_value=$current+$value;
-	update_currency_amount($username,$currencyname,$new_value);
-	header("location:../page/Client.php?exchange_success");
+	update_usercurrency_amount($username,$currencyname,$new_value);
 }
 
-function create_transaction($username,$currency1,$currency2,$result){
+function create_transaction($username,$currency1,$currency2){
 	require('db.php');
-	$sql="INSERT INTO `transactions` ('username','FCUR,'TCUR','result,'created_at') VALUES ('$username','$currency1','$currency2','$result',now());";
+	$sql="INSERT INTO `transactions` ('username','FCUR,'TCUR','result,'created_at') VALUES ('$username','$currency1','$currency2','0',now());";
 	mysqli_query($con,$sql);
+}
+
+function currency_randomvalue_create($currencyname,$seconds){
+	require('db.php');
+	$name=$currencyname.'_generator';
+	$date="SELECT now() FROM DUAL;";
+	$date=mysqli_query($con,$date) or die(mysqli_error($con));
+	$date=mysqli_fetch_assoc($date)['now()'];
+	$sql="CREATE EVENT $name
+	ON SCHEDULE EVERY $seconds SECOND STARTS '$date'
+	DO
+		BEGIN
+			DECLARE v_min, v_max, v_current, v_new_value double(10,3);
+			SELECT min_value,max_value,cur_value INTO v_min,v_max,v_current FROM `currency` WHERE name='$currencyname';
+			SELECT RAND()*(v_max-v_min)+v_min INTO v_new_value FROM DUAL;
+			UPDATE `currency` SET cur_value=v_new_value, last_value=v_current, last_update=now() WHERE name='$currencyname';
+		END;";
+	mysqli_query($con,$sql) or die(mysqli_error($con));
+}
+
+function currency_randomvalue_update($currencyname,$seconds){
+	require('db.php');
+	$name=$currencyname.'_generator';
+	$date="SELECT now() FROM DUAL;";
+	$date=mysqli_query($con,$date) or die(mysqli_error($con));
+	$date=mysqli_fetch_assoc($date)['now()'];
+	$sql="ALTER EVENT $name
+	ON SCHEDULE EVERY $seconds SECOND STARTS '$date';";
+	mysqli_query($con,$sql) or die(mysqli_error($con));
+}
+
+function currency_drop_event($currencyname){
+	require('db.php');
+	$name=$currencyname.'_generator';
+	$sql="DROP EVENT $name ;";
+	mysqli_query($con,$sql) or die(mysqli_error($con));
 }
 
 ?>

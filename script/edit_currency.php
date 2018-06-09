@@ -11,18 +11,19 @@ if (isset($_POST['submit'])){
 	$update_time=$_POST['update_time'];
 	$sql="UPDATE `currency` SET min_value='$min_value',max_value='$max_value',update_time='$update_time',last_update=now() WHERE name='$name'";
 	mysqli_query($con,$sql);
+	currency_randomvalue_update($name,$update_time);
 	header("location:../page/Admin.php?update_currency_success");
 }
 if (isset($_POST['delete'])){
 	$name=$_POST['name'];
-	$tablename="currency";
-	$colname="name";
-	delete_from_table($tablename,$colname,$name);
+	remove_currency($name);
 	header("location:../page/Admin.php?delete_currency_success");
 }
 if (isset($_POST['insert'])){
 	$name=$_POST['name'];
+	$name = mb_strimwidth($name,0,8);
 	create_currency($name);
+	currency_randomvalue_create($name,30);
 	header("location:../page/Admin.php?$name_created_successfully");
 }
 
@@ -45,7 +46,7 @@ if (mysqli_num_rows($result)>0){
 	} ?>
 	<tr>
 	<form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
-	<td><input type="text" class="changeRate" name="name" value="CUR"></td>
+	<td><input type="text" maxlength="8" class="changeRate" name="name" value="CUR"></td>
 	<td><input type="submit" name="insert" value="Create Currency"></button></td>
 	</form>
 	</tr>

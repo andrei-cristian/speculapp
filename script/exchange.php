@@ -20,14 +20,9 @@ if (!check_amount($amount)){
 }
 
 
-$value_from=get_currency_value($option1);
-
-$value_to=get_currency_value($option2);
-
-$exchangeval=(($amount*$value_from)/$value_to);
-
 if(take_money($user_name,$option1,$amount)){
-	insert_money($user_name,$option2,$exchangeval);
+	insert_money($user_name,$option2,get_exchange_value($amount,$option1,$option2));
+	header("location:../page/Client.php?exchange_success");
 }
 else{
 	header("location:../page/Client.php?exchange_denied");

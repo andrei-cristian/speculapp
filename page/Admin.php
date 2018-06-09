@@ -52,7 +52,7 @@ require ('../script/check_admin.php');
         <th>Currency</th>
         <th>From</th>
         <th>To</th>
-        <th>Time</th>
+        <th>Time(seconds)</th>
     </tr>
     <?php require('../script/edit_currency.php'); ?>
 </table>
