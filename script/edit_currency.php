@@ -44,12 +44,6 @@ if (mysqli_num_rows($result)>0){
 		</form>
 	<?php
 	} ?>
-	<tr>
-	<form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
-	<td><input type="text" maxlength="8" class="changeRate" name="name" value="CUR"></td>
-	<td><input type="submit" name="insert" value="Create Currency"></button></td>
-	</form>
-	</tr>
 <?php 
 }
 ?>

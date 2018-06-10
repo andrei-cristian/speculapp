@@ -36,6 +36,18 @@ function get_game_data(){
 	else return 0;
 }
 
+function get_game_time(){
+	$time=get_game_data();
+	if ($time) {
+		$time=mysqli_fetch_assoc($time);
+		$time=$time['valid_time'];
+		return $time;
+	}
+	else{
+		return 0;
+	}
+}
+
 function get_user_transactions($username){
 	require('db.php');
 	$sql="SELECT * FROM `transactions` WHERE username='$username' ORDER BY created_at DESC";
@@ -51,7 +63,7 @@ function set_credit($username,$credit){
 
 function get_currency(){
 	require('db.php');
-	$sql="SELECT * FROM `currency`;";
+	$sql="SELECT * FROM `currency` ORDER BY cur_value DESC;";
 	$result=mysqli_query($con,$sql) or die (mysqli_error($con));
 	if ($result){
 		return $result;
@@ -251,6 +263,7 @@ function currency_randomvalue_create($currencyname,$seconds){
 			SELECT min_value,max_value,cur_value INTO v_min,v_max,v_current FROM `currency` WHERE name='$currencyname';
 			SELECT RAND()*(v_max-v_min)+v_min INTO v_new_value FROM DUAL;
 			UPDATE `currency` SET cur_value=v_new_value, last_value=v_current, last_update=now() WHERE name='$currencyname';
+			INSERT INTO `value_history` (currency_name,value,created_at) VALUES('$currencyname',v_new_value,now());
 		END;";
 	mysqli_query($con,$sql) or die(mysqli_error($con));
 }
@@ -273,4 +286,17 @@ function currency_drop_event($currencyname){
 	mysqli_query($con,$sql) or die(mysqli_error($con));
 }
 
+
+function compute_transaction_result($username){
+	require('db.php');
+	$time=get_game_time();
+	
+	if (!$time){
+		return;
+	}
+
+	
+}
+
 ?>
+

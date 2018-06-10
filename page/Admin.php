@@ -55,6 +55,12 @@ require ('../script/check_admin.php');
         <th>Time(seconds)</th>
     </tr>
     <?php require('../script/edit_currency.php'); ?>
+    <tr>
+    <form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
+    <td><input type="text" maxlength="8" class="changeRate" name="name" value="CUR"></td>
+    <td><input type="submit" name="insert" value="Create Currency"></button></td>
+    </form>
+    </tr>
 </table>
     <table style="
     margin-left:  auto;
@@ -63,6 +69,7 @@ require ('../script/check_admin.php');
 ">
   
     <?php require('../script/edit_gameinfo.php'); ?>
+
 
 </table>
 </div>
