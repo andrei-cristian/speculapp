@@ -42,11 +42,10 @@ li a:hover {
     padding-bottom: 1%;
 }
 div{
-    margin-left:45%;
-    margin-top:5%;
+
     font-size: large;
     font-family: "Arial";
-    width:480px;
+
 }
 table{
     border-collapse: collapse;

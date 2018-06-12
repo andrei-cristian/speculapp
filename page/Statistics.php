@@ -18,7 +18,7 @@ require ('../script/session_check.php');
     <li><a href="About.php">About</a></li>
     <li><a href="../script/logout.php">Logout</a></li>
     </ul>
-    <div style="float:left;margin-left:auto;margin-right: auto;padding:10px">
+    <div style="width: fit-content;margin-left:auto;margin-right: auto;padding:10px">
     <p>Top 10 Richest Players</p>
     <table>
         <tr>

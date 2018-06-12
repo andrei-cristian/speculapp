@@ -33,8 +33,8 @@ require ('../script/check_admin.php');
 <body>
 <h1 class="container">Admin Panel</h1>
 <ul class="container">
-    <li><a href="#">EXPORT JSON</a> </li>
-    <li><a href="#">EXPORT XML</a></li>
+    <li><form action="../script/json.php" method="post"> <input type="submit" value="EXPORT JSON" style="background-color: #293249; color: white; border: 0px;font-family: 'Arial Black'; font-size: 2vw"></form> </li>
+    <li><form action="../script/xml.php" method="post"> <input type="submit" value="EXPORT XML" style="background-color: #293249; color: white; border: 0px;font-family: 'Arial Black'; font-size: 2vw"></form> </li>
     <li><a href="#">EDIT RSS</a></li>
     <li><a href="../script/logout.php">Logout</a></li>
 </ul>
