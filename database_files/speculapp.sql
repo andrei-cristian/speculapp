@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2018 at 09:15 AM
+-- Generation Time: Jun 13, 2018 at 10:36 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -12,6 +12,7 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 SET GLOBAL event_scheduler = ON;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,7 +42,10 @@ CREATE TABLE `available` (
 --
 
 INSERT INTO `available` (`id`, `username`, `currency_name`, `amount`, `updated_at`) VALUES
-(2, 'test2', 'EUR', '1.752', '2018-06-13 10:00:07');
+(2, 'test2', 'EUR', '1.752', '2018-06-13 10:00:07'),
+(3, 'test1', 'GBP', '1.698', '2018-06-13 10:36:40'),
+(4, 'test1', 'EUR', '1.352', '2018-06-13 10:38:05'),
+(6, 'test1', 'USD', '1.796', '2018-06-13 10:38:05');
 
 -- --------------------------------------------------------
 
@@ -64,10 +68,10 @@ CREATE TABLE `currency` (
 --
 
 INSERT INTO `currency` (`name`, `cur_value`, `last_value`, `min_value`, `max_value`, `update_time`, `last_update`) VALUES
-('DKK', 1.445, 0.375, 0.300, 1.600, 30, '2018-06-13 10:15:11'),
-('EUR', 4.701, 5.808, 4.000, 6.000, 10, '2018-06-13 10:15:39'),
-('GBP', 5.160, 5.204, 4.600, 7.000, 30, '2018-06-13 10:15:38'),
-('USD', 3.010, 3.604, 2.400, 4.200, 15, '2018-06-13 10:15:39');
+('DKK', 0.844, 0.515, 0.300, 1.600, 10, '2018-06-13 11:15:11'),
+('EUR', 5.150, 5.415, 4.000, 6.000, 10, '2018-06-13 11:15:19'),
+('GBP', 6.817, 6.968, 4.600, 7.000, 30, '2018-06-13 11:15:08'),
+('USD', 2.413, 3.434, 2.400, 4.200, 15, '2018-06-13 11:15:24');
 
 -- --------------------------------------------------------
 
@@ -107,8 +111,9 @@ CREATE TABLE `hof` (
 --
 
 INSERT INTO `hof` (`username`, `user_id`, `credit`, `updated_at`) VALUES
-('test1', 2, 10421.21, '2018-06-13 10:05:56'),
-('test2', 3, 990.00, '2018-06-13 10:00:07');
+('test1', 2, 10616.20, '2018-06-13 10:37:45'),
+('test2', 3, 990.00, '2018-06-13 10:00:07'),
+('test3', 10, 0.00, '2018-06-13 11:35:54');
 
 -- --------------------------------------------------------
 
@@ -133,7 +138,13 @@ INSERT INTO `transactions` (`id`, `username`, `FCUR`, `TCUR`, `result`, `created
 (1, 'test1', 'RON', 'EUR', 10.000, '2018-06-09 10:36:43'),
 (7, 'test1', 'RON', 'GBP', -10.000, '2018-06-13 10:05:43'),
 (8, 'test1', 'RON', 'GBP', -100.000, '2018-06-13 10:05:48'),
-(9, 'test1', 'GBP', 'RON', 248.207, '2018-06-13 10:05:57');
+(9, 'test1', 'GBP', 'RON', 248.207, '2018-06-13 10:05:57'),
+(10, 'test1', 'RON', 'GBP', -10.000, '2018-06-13 10:36:40'),
+(11, 'test1', 'RON', 'EUR', -10.000, '2018-06-13 10:36:43'),
+(12, 'test1', 'RON', 'DKK', -100.000, '2018-06-13 10:36:46'),
+(13, 'test1', 'RON', 'DKK', -100.000, '2018-06-13 10:37:32'),
+(14, 'test1', 'DKK', 'RON', 414.991, '2018-06-13 10:37:45'),
+(15, 'test1', 'EUR', 'USD', 0.000, '2018-06-13 10:38:05');
 
 -- --------------------------------------------------------
 
@@ -158,13 +169,14 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`ID`, `username`, `password`, `email`, `role`, `created_at`, `updated_at`) VALUES
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@admin.com', 'admin', '2018-05-09 16:16:00', '2018-05-09 16:16:00'),
 (2, 'test1', '5a105e8b9d40e1329780d62ea2265d8a', 'test1@test.net', 'user', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 'test2', 'ad0234829205b9033196ba818f7a872b', 'test2@test.net', 'user', '2018-05-11 00:25:58', '2018-05-11 00:25:58');
+(3, 'test2', 'ad0234829205b9033196ba818f7a872b', 'test2@test.net', 'user', '2018-05-11 00:25:58', '2018-05-11 00:25:58'),
+(10, 'test3', '8ad8757baa8564dc136c1e07507f4a98', 'test3@test.com', 'user', '2018-06-13 11:35:54', '2018-06-13 11:35:54');
 
 --
 -- Triggers `users`
 --
 DELIMITER $$
-CREATE TRIGGER `add_to_hof` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO `speculapp`.`hof`(username,user_id,points,updated_at) VALUES (NEW.username, NEW.id, 0, now())
+CREATE TRIGGER `add_to_hof` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO `speculapp`.`hof`(username,user_id,credit,updated_at) VALUES (NEW.username, NEW.id, 0, now())
 $$
 DELIMITER ;
 
@@ -215,19 +227,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `available`
 --
 ALTER TABLE `available`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
