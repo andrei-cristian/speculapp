@@ -1,17 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2018 at 09:33 AM
+-- Generation Time: Jun 13, 2018 at 09:15 AM
 -- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- PHP Version: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
-
+SET GLOBAL event_scheduler = ON;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,23 +25,49 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `available`
+--
+
+CREATE TABLE `available` (
+  `id` int(11) NOT NULL,
+  `username` varchar(32) NOT NULL,
+  `currency_name` varchar(8) NOT NULL,
+  `amount` decimal(10,3) NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `available`
+--
+
+INSERT INTO `available` (`id`, `username`, `currency_name`, `amount`, `updated_at`) VALUES
+(2, 'test2', 'EUR', '1.752', '2018-06-13 10:00:07');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `currency`
 --
 
 CREATE TABLE `currency` (
   `name` varchar(8) NOT NULL,
-  `cur_value` double NOT NULL,
-  `min_value` double NOT NULL,
-  `max_value` double NOT NULL
+  `cur_value` double(10,3) NOT NULL,
+  `last_value` double(10,3) NOT NULL,
+  `min_value` double(10,3) NOT NULL,
+  `max_value` double(10,3) NOT NULL,
+  `update_time` int(11) NOT NULL,
+  `last_update` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `currency`
 --
 
-INSERT INTO `currency` (`name`, `cur_value`, `min_value`, `max_value`) VALUES
-('EUR', 5.6, 4.3, 6.8),
-('USD', 3.6, 2.3, 5.5);
+INSERT INTO `currency` (`name`, `cur_value`, `last_value`, `min_value`, `max_value`, `update_time`, `last_update`) VALUES
+('DKK', 1.445, 0.375, 0.300, 1.600, 30, '2018-06-13 10:15:11'),
+('EUR', 4.701, 5.808, 4.000, 6.000, 10, '2018-06-13 10:15:39'),
+('GBP', 5.160, 5.204, 4.600, 7.000, 30, '2018-06-13 10:15:38'),
+('USD', 3.010, 3.604, 2.400, 4.200, 15, '2018-06-13 10:15:39');
 
 -- --------------------------------------------------------
 
@@ -50,7 +76,6 @@ INSERT INTO `currency` (`name`, `cur_value`, `min_value`, `max_value`) VALUES
 --
 
 CREATE TABLE `game` (
-  `last_update` datetime NOT NULL,
   `valid_time` int(11) NOT NULL,
   `init_money` double NOT NULL,
   `win_limit` double NOT NULL,
@@ -61,8 +86,8 @@ CREATE TABLE `game` (
 -- Dumping data for table `game`
 --
 
-INSERT INTO `game` (`last_update`, `valid_time`, `init_money`, `win_limit`, `lose_limit`) VALUES
-('2018-05-11 10:37:00', 300, 1000, 2000, 100);
+INSERT INTO `game` (`valid_time`, `init_money`, `win_limit`, `lose_limit`) VALUES
+(300, 3000, 6000, 100);
 
 -- --------------------------------------------------------
 
@@ -71,8 +96,9 @@ INSERT INTO `game` (`last_update`, `valid_time`, `init_money`, `win_limit`, `los
 --
 
 CREATE TABLE `hof` (
+  `username` varchar(32) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `credit` int(11) NOT NULL,
+  `credit` double(10,2) NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -80,9 +106,34 @@ CREATE TABLE `hof` (
 -- Dumping data for table `hof`
 --
 
-INSERT INTO `hof` (`user_id`, `credit`, `updated_at`) VALUES
-(2, 0, '2018-05-11 00:24:54'),
-(3, 0, '2018-05-11 00:25:58');
+INSERT INTO `hof` (`username`, `user_id`, `credit`, `updated_at`) VALUES
+('test1', 2, 10421.21, '2018-06-13 10:05:56'),
+('test2', 3, 990.00, '2018-06-13 10:00:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `id` int(11) NOT NULL,
+  `username` varchar(32) NOT NULL,
+  `FCUR` varchar(8) NOT NULL,
+  `TCUR` varchar(8) NOT NULL,
+  `result` double(10,3) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `username`, `FCUR`, `TCUR`, `result`, `created_at`) VALUES
+(1, 'test1', 'RON', 'EUR', 10.000, '2018-06-09 10:36:43'),
+(7, 'test1', 'RON', 'GBP', -10.000, '2018-06-13 10:05:43'),
+(8, 'test1', 'RON', 'GBP', -100.000, '2018-06-13 10:05:48'),
+(9, 'test1', 'GBP', 'RON', 248.207, '2018-06-13 10:05:57');
 
 -- --------------------------------------------------------
 
@@ -113,7 +164,7 @@ INSERT INTO `users` (`ID`, `username`, `password`, `email`, `role`, `created_at`
 -- Triggers `users`
 --
 DELIMITER $$
-CREATE TRIGGER `add_to_hof` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO `speculapp`.`hof`(user_id,points,updated_at) VALUES (NEW.id,0,now())
+CREATE TRIGGER `add_to_hof` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO `speculapp`.`hof`(username,user_id,points,updated_at) VALUES (NEW.username, NEW.id, 0, now())
 $$
 DELIMITER ;
 
@@ -122,22 +173,32 @@ DELIMITER ;
 --
 
 --
+-- Indexes for table `available`
+--
+ALTER TABLE `available`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username_currency` (`username`,`currency_name`),
+  ADD KEY `currency_name` (`currency_name`);
+
+--
 -- Indexes for table `currency`
 --
 ALTER TABLE `currency`
   ADD PRIMARY KEY (`name`);
 
 --
--- Indexes for table `game`
---
-ALTER TABLE `game`
-  ADD PRIMARY KEY (`last_update`);
-
---
 -- Indexes for table `hof`
 --
 ALTER TABLE `hof`
-  ADD KEY `user_id` (`user_id`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `user_id_2` (`user_id`),
+  ADD KEY `user_id` (`user_id`) USING BTREE;
+
+--
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -151,6 +212,18 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `available`
+--
+ALTER TABLE `available`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -161,10 +234,55 @@ ALTER TABLE `users`
 --
 
 --
+-- Constraints for table `available`
+--
+ALTER TABLE `available`
+  ADD CONSTRAINT `available_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`),
+  ADD CONSTRAINT `available_ibfk_2` FOREIGN KEY (`currency_name`) REFERENCES `currency` (`name`);
+
+--
 -- Constraints for table `hof`
 --
 ALTER TABLE `hof`
   ADD CONSTRAINT `hof_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`);
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`user`@`localhost` EVENT `GBP_generator` ON SCHEDULE EVERY 30 SECOND STARTS '2018-06-10 16:43:08' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+			DECLARE v_min, v_max, v_current, v_new_value double(10,3);
+			SELECT min_value,max_value,cur_value INTO v_min,v_max,v_current FROM `currency` WHERE name='GBP';
+			SELECT RAND()*(v_max-v_min)+v_min INTO v_new_value FROM DUAL;
+			UPDATE `currency` SET cur_value=v_new_value, last_value=v_current, last_update=now() WHERE name='GBP';
+			INSERT INTO `value_history` (currency_name,value,created_at) VALUES('GBP',v_new_value,now());
+		END$$
+
+CREATE DEFINER=`user`@`localhost` EVENT `DKK_generator` ON SCHEDULE EVERY 30 SECOND STARTS '2018-06-10 16:43:41' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+			DECLARE v_min, v_max, v_current, v_new_value double(10,3);
+			SELECT min_value,max_value,cur_value INTO v_min,v_max,v_current FROM `currency` WHERE name='DKK';
+			SELECT RAND()*(v_max-v_min)+v_min INTO v_new_value FROM DUAL;
+			UPDATE `currency` SET cur_value=v_new_value, last_value=v_current, last_update=now() WHERE name='DKK';
+			INSERT INTO `value_history` (currency_name,value,created_at) VALUES('DKK',v_new_value,now());
+		END$$
+
+CREATE DEFINER=`user`@`localhost` EVENT `EUR_generator` ON SCHEDULE EVERY 10 SECOND STARTS '2018-06-10 16:42:39' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+			DECLARE v_min, v_max, v_current, v_new_value double(10,3);
+			SELECT min_value,max_value,cur_value INTO v_min,v_max,v_current FROM `currency` WHERE name='EUR';
+			SELECT RAND()*(v_max-v_min)+v_min INTO v_new_value FROM DUAL;
+			UPDATE `currency` SET cur_value=v_new_value, last_value=v_current, last_update=now() WHERE name='EUR';
+			INSERT INTO `value_history` (currency_name,value,created_at) VALUES('EUR',v_new_value,now());
+		END$$
+
+CREATE DEFINER=`user`@`localhost` EVENT `USD_generator` ON SCHEDULE EVERY 15 SECOND STARTS '2018-06-10 16:42:54' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+			DECLARE v_min, v_max, v_current, v_new_value double(10,3);
+			SELECT min_value,max_value,cur_value INTO v_min,v_max,v_current FROM `currency` WHERE name='USD';
+			SELECT RAND()*(v_max-v_min)+v_min INTO v_new_value FROM DUAL;
+			UPDATE `currency` SET cur_value=v_new_value, last_value=v_current, last_update=now() WHERE name='USD';
+			INSERT INTO `value_history` (currency_name,value,created_at) VALUES('USD',v_new_value,now());
+		END$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
