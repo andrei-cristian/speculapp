@@ -22,6 +22,7 @@ if (!check_amount($amount)){
 
 if(take_money($user_name,$option1,$amount)){
 	insert_money($user_name,$option2,get_exchange_value($amount,$option1,$option2));
+	transaction($user_name,$option1,$option2,$amount);
 	header("location:../page/Client.php?exchange_success");
 }
 else{

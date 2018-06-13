@@ -11,6 +11,7 @@ require ('../script/session_check.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpeculApp</title>
     <link href="../style/Client.css" type="text/css" rel="stylesheet">
+    <script src="../script/jquery-1.10.2.js"></script>
 </head>
 <body>
 <h1 class="container">SpeculApp</h1>
@@ -21,17 +22,23 @@ require ('../script/session_check.php');
     <li><a href="../script/logout.php">Logout</a></li>
 </ul>
 <div class="game">
-<table class="exchangerate" >
-    <caption style="padding-bottom: 0.5em">Exchange Rate</caption>
-    <tr>
-        <th>Currency</th>
-        <th>Value</th>
-    </tr>
-
-    <?php require("../script/get_rate.php") ?>
     
+    <div id="refresh">
+    
+    </div>
 
-</table>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#refresh').load('../script/get_rate.php');
+            refresh();
+        });
+        function refresh(){
+            setTimeout(function(){
+                $('#refresh').load('../script/get_rate.php');
+                refresh();
+            },200);
+        }
+    </script>    
 
     <table class="budget">
         <caption style="padding-bottom: 0.5em">Available</caption>

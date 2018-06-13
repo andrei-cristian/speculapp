@@ -1,7 +1,12 @@
+<table class="exchangerate" >
+    <caption style="padding-bottom: 0.5em">Exchange Rate</caption>
+<tr>
+        <th>Currency</th>
+        <th>Value</th>
+</tr>
 <?php
 
 require('db.php');
-require ('session_check.php');
 include_once('include.php');
 
 $result = get_currency();
@@ -18,3 +23,4 @@ if (mysqli_num_rows($result)>0){
 }
 
 ?>
+</table>

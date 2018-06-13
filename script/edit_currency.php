@@ -31,7 +31,7 @@ $result=get_currency();
 
 if (mysqli_num_rows($result)>0){
 	while ($row=mysqli_fetch_assoc($result)){ ?>
-		<form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
+		<form method="post" action="../script/edit_currency.php">
 		<tr>
 			<td><?php echo $row['name'];?></td>
 			<td><input type="number" step="any" class="changeRate" name="min_value" value="<?php echo $row['min_value'];?>"></td>

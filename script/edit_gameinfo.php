@@ -20,7 +20,7 @@ $result = mysqli_fetch_assoc($result);
 
 ?>
 
-<form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
+<form method="post" action="../script/edit_gameinfo.php">
 <input type="hidden" name=validtimefind value='<?php echo $result['valid_time']?>'>
     <tr>
         <td>Signing amount</td>

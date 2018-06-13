@@ -56,7 +56,7 @@ require ('../script/check_admin.php');
     </tr>
     <?php require('../script/edit_currency.php'); ?>
     <tr>
-    <form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
+    <form method="post" action="../script/edit_currency.php">
     <td><input type="text" maxlength="8" class="changeRate" name="name" value="CUR"></td>
     <td><input type="submit" name="insert" value="Create Currency"></button></td>
     </form>

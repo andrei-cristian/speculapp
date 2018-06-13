@@ -119,7 +119,7 @@ function remove_currency($currencyname){
 			$amount=get_exchange_value($amount,$currencyname,'RON');
 			insert_money($username,'RON',$amount);
 			delete_from_table('available','id',$id);
-			create_transaction($username,$currencyname,'RON');
+			transaction($username,$currencyname,'RON',$amount);
 		}
 	}
 	delete_from_table('currency','name',$currencyname);
@@ -243,10 +243,10 @@ function insert_money($username,$currencyname,$value){
 	update_usercurrency_amount($username,$currencyname,$new_value);
 }
 
-function create_transaction($username,$currency1,$currency2){
+function create_transaction($username,$currency1,$currency2,$result){
 	require('db.php');
-	$sql="INSERT INTO `transactions` ('username','FCUR,'TCUR','result,'created_at') VALUES ('$username','$currency1','$currency2','0',now());";
-	mysqli_query($con,$sql);
+	$sql="INSERT INTO `transactions` (username,FCUR,TCUR,result,created_at) VALUES ('$username','$currency1','$currency2','$result',now());";
+	mysqli_query($con,$sql) or die(mysqli_error($con));
 }
 
 function currency_randomvalue_create($currencyname,$seconds){
@@ -263,7 +263,6 @@ function currency_randomvalue_create($currencyname,$seconds){
 			SELECT min_value,max_value,cur_value INTO v_min,v_max,v_current FROM `currency` WHERE name='$currencyname';
 			SELECT RAND()*(v_max-v_min)+v_min INTO v_new_value FROM DUAL;
 			UPDATE `currency` SET cur_value=v_new_value, last_value=v_current, last_update=now() WHERE name='$currencyname';
-			INSERT INTO `value_history` (currency_name,value,created_at) VALUES('$currencyname',v_new_value,now());
 		END;";
 	mysqli_query($con,$sql) or die(mysqli_error($con));
 }
@@ -286,16 +285,31 @@ function currency_drop_event($currencyname){
 	mysqli_query($con,$sql) or die(mysqli_error($con));
 }
 
-
-function compute_transaction_result($username){
-	require('db.php');
-	$time=get_game_time();
-	
-	if (!$time){
-		return;
+function user_game_check($username){
+	$usercredit=get_user_funds($username,'RON');
+	if($lose_limit=get_game_data)
+		$lose_limit=mysqli_fetch_assoc($lose_limit)['lose_limit'];
+	if ($usercredit>$lose_limit){
+		return 1;
 	}
+	else{
+		return 0;
+	}
+}
 
-	
+function transaction($username,$currency1,$currency2,$amount){
+	if ($currency1=='RON'){
+		$amount=0-$amount;
+		create_transaction($username,$currency1,$currency2,$amount);
+	}
+	else
+		if ($currency2=='RON'){
+			$amount=get_exchange_value($amount,$currency1,$currency2);
+			create_transaction($username,$currency1,$currency2,$amount);
+		}
+		else{
+			create_transaction($username,$currency1,$currency2,0);
+		}
 }
 
 ?>
