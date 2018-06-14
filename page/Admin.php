@@ -44,9 +44,9 @@ require ('../script/check_admin.php');
     margin-top: 5%;
     border: 1em double orangered;
     padding: 10px;
-    width: 80%;
+    width: fit-content;
 ">
-<table>
+<table style="margin-left:auto; margin-right: auto">
     <caption>Range Between</caption>
     <tr>
         <th>Currency</th>
