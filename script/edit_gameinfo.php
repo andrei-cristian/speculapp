@@ -34,10 +34,7 @@ $result = mysqli_fetch_assoc($result);
         <td>Losing threshold</td>
         <td><input type="number" name="lostresh" value='<?php echo $result['lose_limit']?>'><br></td>
     </tr>
-    <tr>
-        <td>Period of validity</td>
-        <td> <input type="number" name='validtime' value='<?php echo $result['valid_time']?>'><br></td>
-    </tr>
+
     <tr>
         <td><input type="submit" name="submit" value="Submit"></td>
     </tr>
