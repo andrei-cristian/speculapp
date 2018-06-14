@@ -71,9 +71,6 @@ li a:hover {
     margin-left:5%;
     display: inline-block;
 }
-#refresh{
-    float:right;
-}
 /*Bugetul disponibil*/
 .budget{
     float: left;
